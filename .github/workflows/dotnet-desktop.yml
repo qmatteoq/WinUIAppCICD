@@ -53,7 +53,7 @@ jobs:
 
     env:
       Solution_Name: WinUIAppCICD.sln                         # Replace with your solution name, i.e. MyWpfApp.sln
-      Package_Folder: AppPackages
+      Package_Folder: ${{ env.GITHUB_WORKSPACE}}\AppPackages
 
     steps:
     - name: Checkout
