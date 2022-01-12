@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WinUIAppCICD (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "WinUIAppCICD (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
