@@ -112,7 +112,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: MSIX-package
+          name: MSIX Package
           path: MSIX-package
 
       - name: Create Release
