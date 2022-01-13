@@ -36,7 +36,7 @@
 # For a complete CI/CD sample to get started with GitHub Action workflows for Desktop Applications,
 # refer to https://github.com/microsoft/github-actions-for-desktop-apps
 
-name: .NET Core Desktop
+name: WinUI application
 
 on:
   push:
@@ -48,11 +48,10 @@ jobs:
 
   build:
    
-    runs-on: windows-2022  # For a list of available runner types, refer to
-                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
-
+    runs-on: windows-2022
+    
     env:
-      Solution_Name: WinUIAppCICD.sln                         # Replace with your solution name, i.e. MyWpfApp.sln
+      Solution_Name: WinUIAppCICD.sln                 
 
     steps:
     - name: Checkout
