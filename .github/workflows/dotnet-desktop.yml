@@ -116,14 +116,13 @@ jobs:
       - name: Decode the pfx
         run: |
           $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.CERTIFICATE }}")
-          $certificatePath = Join-Path -Path MSIX-package -ChildPath GitHubActionsWorkflow.pfx
-          [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+          [IO.File]::WriteAllBytes("${{ github.workspace}}\MSIX-package\GitHubActionsWorkflow.pfx", $pfx_cert_byte)
 
       - name: Sign package
         run: |
               Get-ChildItem -recurse -Include *.msix | ForEach-Object {
               $msixPath = $_.FullName
-              & "C:/Program Files (x86)/Windows Kits/10/bin/10.0.19041.0/x64/signtool.exe" sign /f "MSIX-package/GitHubActionsWorkflow.pfx" /p ${{ secrets.PASSWORD }} $msixPath
+              & "C:/Program Files (x86)/Windows Kits/10/bin/10.0.19041.0/x64/signtool.exe" sign /f "${{ github.workspace}}\MSIX-package\GitHubActionsWorkflow.pfx" /p ${{ secrets.PASSWORD }} $msixPath
               }  
 
       - name: Remove the pfx
