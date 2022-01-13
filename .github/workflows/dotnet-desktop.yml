@@ -122,7 +122,7 @@ jobs:
         run: |
               Get-ChildItem -recurse -Include *.msix | ForEach-Object {
               $msixPath = $_.FullName
-              & "C:/Program Files (x86)/Windows Kits/10/bin/10.0.19041.0/x64/signtool.exe" sign /f "${{ github.workspace}}\MSIX-package\GitHubActionsWorkflow.pfx" /p ${{ secrets.PASSWORD }} $msixPath
+              & "C:/Program Files (x86)/Windows Kits/10/bin/10.0.22000.0/x64/signtool.exe" sign /f "${{ github.workspace}}\MSIX-package\GitHubActionsWorkflow.pfx" /p ${{ secrets.PASSWORD }} /fd SHA256 $msixPath
               }  
 
       - name: Remove the pfx
