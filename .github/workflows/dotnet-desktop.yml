@@ -102,3 +102,36 @@ jobs:
       with:
         name: MSIX Package
         path: ${{github.workspace}}\AppPackages
+
+  deploy:
+
+    runs-on: windows-2022
+    needs: [ build ]
+
+    steps:
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: MSIX-package
+          path: MSIX-package
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{env.NBGV_SimpleVersion}}.0
+          release_name: Release ${{env.NBGV_SimpleVersion}}.0          
+          draft: false
+          prerelease: false
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: MSIX-package
+          asset_name: MSIX package
+          tag: ${{env.NBGV_SimpleVersion}}.0
+          overwrite: true
+          body: "New version"
