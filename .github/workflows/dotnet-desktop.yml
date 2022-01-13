@@ -57,7 +57,20 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       with:
-        fetch-depth: 0     
+        fetch-depth: 0
+    
+    - name: Use Nerdbank.GitVersioning to set version variables
+      uses: dotnet/nbgv@v0.4.0
+      with:
+        setAllVars: true
+
+    - name: Update manifest version
+      run: |
+        [xml]$manifest = get-content ${{env.manifestPath}}
+        $manifest.Package.Identity.Version = "${{env.NBGV_SimpleVersion}}.0"
+        $manifest.save("${{env.manifestPath}}")  
+      env: 
+        manifestPath: .\WinUIAppCICD\Package.appxmanifest
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
