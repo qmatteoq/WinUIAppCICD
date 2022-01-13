@@ -115,6 +115,11 @@ jobs:
           name: MSIX Package
           path: MSIX-package
 
+      - name: Use Nerdbank.GitVersioning to set version variables
+        uses: dotnet/nbgv@v0.4.0
+        with:
+          setAllVars: true
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
