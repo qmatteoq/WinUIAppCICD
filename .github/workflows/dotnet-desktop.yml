@@ -44,6 +44,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  version: 0.0.0  
+
 jobs:
 
   build:
@@ -92,6 +95,10 @@ jobs:
         Appx_Package_Build_Mode: SideloadOnly
         Configuration: Release
 
+    - name: Set the version
+      id: step_one
+      run: |
+        echo "version=${{env.NBGV_SimpleVersion}}" >> $GITHUB_ENV
     # Remove the pfx
     #- name: Remove the pfx
     #  run: Remove-Item -path $env:Wap_Project_Directory\$env:Signing_Certificate
@@ -115,23 +122,18 @@ jobs:
           name: MSIX Package
           path: MSIX-package
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
 
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: MSIX-package
-          asset_name: MSIX package
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "New version"
+      - name: Read the version
+        id: step_two
+        run: |
+          echo "${{ env.version }}" 
+
+      # - name: Upload binaries to release
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: MSIX-package
+      #     asset_name: MSIX package
+      #     tag: ${{ github.ref }}
+      #     overwrite: true
+      #     body: "New version"
