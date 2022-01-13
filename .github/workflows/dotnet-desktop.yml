@@ -96,9 +96,7 @@ jobs:
         Configuration: Release
 
     - name: Set the version
-      id: step_one
-      run: |
-        echo "version=${{env.NBGV_SimpleVersion}}" >> $GITHUB_ENV
+      run: echo "version=${{env.NBGV_SimpleVersion}}" >> $GITHUB_ENV
     # Remove the pfx
     #- name: Remove the pfx
     #  run: Remove-Item -path $env:Wap_Project_Directory\$env:Signing_Certificate
@@ -124,9 +122,7 @@ jobs:
 
 
       - name: Read the version
-        id: step_two
-        run: |
-          echo "${{ env.version }}" 
+        run: echo "${{ env.version }}" 
 
       # - name: Upload binaries to release
       #   uses: svenstaro/upload-release-action@v2
